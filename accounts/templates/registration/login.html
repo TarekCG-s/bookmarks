@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %} Login {% endblock %}
+{% block content %}
+<h1>Login</h1>
+<form method="POST">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="form-group">
+        <label>{{field.label_tag}}</label>
+        {{field}}
+        {% for error in field.errors %}
+        <small class="alert alert-danger">{{ error }}</small>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button type="submit" class="btn btn-primary">Login</button>
+</form>
+<a href="{% url 'password_reset' %}">Forgotten password?</a>
+<p>don't have an account? <a href="{% url 'register' %}">Sign up</a> now</p>
+{% endblock %}
